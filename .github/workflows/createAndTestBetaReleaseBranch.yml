@@ -11,6 +11,8 @@ jobs:
       version: ${{ steps.version.outputs.version }}
       branch: ${{ steps.branch.outputs.branch }}
       result: ${{ steps.result.outputs.result }}
+    env:
+      RELEASE_TYPE: ${{ 'beta' }}
 
     steps:
       - name: Checkout
@@ -36,8 +38,8 @@ jobs:
       - name: Create and Push the Release Branch
         id: create_step
         run: |
-          echo "Creating a ${{ github.event.inputs.releaseType || 'minor' }} release from branch main"
-          node scripts/create-release-branch-for-bundle.js
+          echo "Creating a beta release from branch main"
+          node scripts/create-release-branch.js
       - id: result
         run: echo "result=${{ job.status }}" >> $GITHUB_OUTPUT
       - id: version
