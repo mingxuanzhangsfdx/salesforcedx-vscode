@@ -16,8 +16,8 @@ const sharedConfig = {
   minify: true,                     // Minify the output
   external: [
     'vscode',
-    '@salesforce/core',
-    '@salesforce/source-tracking'
+    '@salesforce/core-bundle',
+    '@salesforce/source-tracking-bundle'
   ]
 };
 

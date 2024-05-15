@@ -14,11 +14,11 @@ const sharedConfig = {
   platform: 'node',
   external: [
     'vscode',
-    '@salesforce/core',
+    '@salesforce/core-bundle',
     'applicationinsights',
     'shelljs',
-    '@salesforce/source-deploy-retrieve',
-    '@salesforce/source-tracking'
+    '@salesforce/source-deploy-retrieve-bundle',
+    '@salesforce/source-tracking-bundle'
   ],
   minify: true
 };
