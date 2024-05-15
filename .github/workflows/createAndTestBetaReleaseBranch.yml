@@ -38,6 +38,7 @@ jobs:
         run: npm install -g npm@9.8.1
       - run: npm install
       - run: npm install -g shelljs && npm install -g lerna@5.5.4
+      - run: rm -rf ./bundle-publish-scripts
       - name: Create and Push the Release Branch
         id: create_step
         run: |
@@ -51,7 +52,7 @@ jobs:
         run: echo "branch=release/v${{ steps.version.outputs.version }}" >> $GITHUB_OUTPUT
 
   run_build_and_test:
-    if: ${{ needs.create_branch.result == 'success' }} # Only run this if the previous job was successful
+    if: ${{ needs.create_branch.result == 'success' }} # Only run this if the previous job is successful
     uses: ./.github/workflows/buildAndTest.yml
     name: 'Run Build and Unit Test'
     needs: create_branch
@@ -59,3 +60,9 @@ jobs:
     with:
       branch: ${{needs.create_branch.outputs.branch}}
       label: ${{needs.create_branch.outputs.version}}
+  
+  # run_beta_publish:
+  #   needs: run_build_and_test
+  #   if: ${{ needs.run_build_and_test == 'success' }} # Only run this if the previous job was successful
+  #   name: 'Run Beta Release'
+  #   uses: 
