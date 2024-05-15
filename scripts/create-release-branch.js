@@ -52,8 +52,6 @@ logger.info(`Release version: ${nextVersion}`);
 if (!isBetaRelease()) {
   checkBaseBranch('develop');
 }
-logger.info(`RELEASE_TYPE: ${RELEASE_TYPE}`);
-logger.info(`isBetaRelease: ${isBetaRelease()}`);
 
 const releaseBranchName = `release/v${nextVersion}`;
 
