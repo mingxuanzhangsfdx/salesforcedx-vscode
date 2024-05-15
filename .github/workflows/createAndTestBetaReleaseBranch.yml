@@ -25,6 +25,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+      - uses: ./.github/actions/gitConfig
+        with:
+          email: ${{ secrets.IDEE_GH_EMAIL }}
       - name: Retrieve Scripts
         run: |
           git clone https://github.com/forcedotcom/bundle-publish-scripts.git
