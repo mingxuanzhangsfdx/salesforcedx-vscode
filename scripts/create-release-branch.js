@@ -5,7 +5,6 @@ const { checkVSCodeVersion, checkBaseBranch } = require('./validation-utils');
 const logger = require('./logger-util');
 
 const RELEASE_TYPE = process.env['RELEASE_TYPE'];
-console.log(RELEASE_TYPE);
 
 shell.set('-e');
 shell.set('+v');
@@ -53,7 +52,8 @@ logger.info(`Release version: ${nextVersion}`);
 if (!isBetaRelease()) {
   checkBaseBranch('develop');
 }
-console.log(isBetaRelease(), 'isBetaRelease()');
+logger.info(`RELEASE_TYPE: ${RELEASE_TYPE}`);
+logger.info(`isBetaRelease: ${isBetaRelease()}`);
 
 const releaseBranchName = `release/v${nextVersion}`;
 
