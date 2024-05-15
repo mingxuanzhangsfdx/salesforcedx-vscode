@@ -52,6 +52,18 @@ jobs:
     uses: ./.github/workflows/buildAndTest.yml
     name: 'Run Build and Unit Test'
     needs: create_branch
+    secrets: inherit
     with:
       branch: ${{needs.create_branch.outputs.branch}}
       label: ${{needs.create_branch.outputs.version}}
+
+  run_e2e:
+    if: ${{ success() }}
+    name: 'Run E2E Tests'
+    needs: [create_branch, run_build_and_test]
+    uses: ./.github/workflows/e2e.yml
+    secrets: inherit
+    with:
+      automationBranch: ${{needs.create_branch.outputs.branch}}
+      runId: ${{ github.event.workflow_run.id }}
+
