@@ -6,7 +6,7 @@ on:
 jobs:
   create_branch:
     name: 'Create Branch'
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
       branch: ${{ steps.branch.outputs.branch }}
