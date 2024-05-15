@@ -105,6 +105,10 @@ if (isBetaRelease()) {
 // Git commit
 shell.exec(`git commit -m "chore: update to version ${nextVersion}"`);
 
+// add credentials for debug
+shell.exec("git config --global user.email \"mingxuanzhang@salesforce.com\"");
+shell.exec("git config--global user.name \"Mingxuan Zhang\"");
+
 // Merge release branch to develop as soon as it is cut.
 // In this way, we can resolve conflicts between main branch and develop branch when merge main back to develop after the release.
 // beta versions should not be merged directly to develop, so we don't merge back to main
