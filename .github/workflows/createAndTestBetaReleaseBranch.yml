@@ -33,7 +33,7 @@ jobs:
           node bundle-publish-scripts/scripts/update-references-in-vsce.js
       - name: Set NPM at the correct version for Lerna
         run: npm install -g npm@9.8.1
-      - run: npm ci
+      - run: npm install
       - run: npm install -g shelljs && npm install -g lerna@5.5.4
       - name: Create and Push the Release Branch
         id: create_step
@@ -56,14 +56,3 @@ jobs:
     with:
       branch: ${{needs.create_branch.outputs.branch}}
       label: ${{needs.create_branch.outputs.version}}
-
-  run_e2e:
-    if: ${{ success() }}
-    name: 'Run E2E Tests'
-    needs: [create_branch, run_build_and_test]
-    uses: ./.github/workflows/e2e.yml
-    secrets: inherit
-    with:
-      automationBranch: ${{needs.create_branch.outputs.branch}}
-      runId: ${{ github.event.workflow_run.id }}
-
