@@ -14,8 +14,8 @@ const sharedConfig = {
   platform: 'node',
   external: [
     'vscode',
-    '@salesforce/core',
-    '@salesforce/source-tracking',
+    '@salesforce/core-bundle',
+    '@salesforce/source-tracking-bundle',
     'applicationinsights',
     '@salesforce/lightning-lsp-common',
     '@salesforce/aura-language-server'
