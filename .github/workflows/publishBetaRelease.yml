@@ -3,6 +3,12 @@ name: Publish Beta Release to Github Only
 on:
   workflow_dispatch:
 
+  workflow_call:
+    inputs:
+      branch:
+        type: string
+        required: true
+
 jobs:
   save_artifacts:
     name: 'Build VSIX Files'
@@ -11,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.ref }}
+          ref: ${{ inputs.branch || github.event.ref }}
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
@@ -48,7 +54,7 @@ jobs:
     needs: [save_artifacts, get_release_variables]
     outputs:
       version: ${{ steps.version.outputs.version }}
-      release_type: ${{ github.event.inputs.releaseType || 'minor' }}
+      release_type: ${{ 'beta' }}
       result: ${{ steps.result.outputs.result }}
     env:
       VERSION: ${{ needs.get_release_variables.outputs.RELEASE_VERSION }}
