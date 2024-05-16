@@ -78,3 +78,4 @@ jobs:
     uses: ./.github/workflows/publishBetaRelease.yml
     with:
       branch: ${{needs.create_branch.outputs.branch}}
+    secrets: inherit
