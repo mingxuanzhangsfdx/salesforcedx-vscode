@@ -81,7 +81,7 @@ jobs:
         run: ls -R
         working-directory: tmp/saved-extensions
       - name: 'Create Pre-Release and Attach VSIX Files'
-        run: gh release create v${{ env.VERSION }} **.vsix --title "Pre-Release v${{ env.VERSION }}" --notes-file CHANGELOG.md --prerelease
+        run: gh release create v${{ env.VERSION }} **.vsix --title "Pre-Release v${{ env.VERSION }}" --notes-file ./packages/salesforcedx-vscode/CHANGELOG.md --prerelease
         working-directory: tmp/saved-extensions
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
