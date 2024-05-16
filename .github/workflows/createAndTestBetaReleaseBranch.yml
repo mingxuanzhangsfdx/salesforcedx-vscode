@@ -34,6 +34,7 @@ jobs:
       - name: Update references for Publishing
         run: |
           node bundle-publish-scripts/scripts/update-references-in-vsce.js
+          node bundle-publish-scripts/scripts/update-bundle-configs-in-vsce.js
       - name: Set NPM at the correct version for Lerna
         run: npm install -g npm@9.8.1
       - run: npm install
@@ -60,9 +61,9 @@ jobs:
     with:
       branch: ${{needs.create_branch.outputs.branch}}
       label: ${{needs.create_branch.outputs.version}}
-  
+
   # run_beta_publish:
   #   needs: run_build_and_test
   #   if: ${{ needs.run_build_and_test == 'success' }} # Only run this if the previous job was successful
   #   name: 'Run Beta Release'
-  #   uses: 
+  #   uses:
