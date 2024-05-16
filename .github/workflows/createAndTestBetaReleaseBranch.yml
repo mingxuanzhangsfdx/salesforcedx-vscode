@@ -73,7 +73,7 @@ jobs:
 
   run_publish_beta_release:
     needs: [confirm_publish, run_build_and_test, create_branch]
-    if: ${{ needs.confirm_publish == 'success' }}
+    if: ${{ needs.confirm_publish.result == 'success' }}
     name: 'Publish Beta Release'
     uses: ./.github/workflows/publishBetaRelease.yml
     with:
