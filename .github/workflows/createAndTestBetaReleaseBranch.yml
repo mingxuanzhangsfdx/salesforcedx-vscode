@@ -68,6 +68,8 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ needs.run_build_and_test == 'success' }} # Only run this if the previous job was successful
     name: 'Confirm Publish Beta Release'
+    steps:
+      - run: echo "Please confirm to publish the beta release"
 
   run_publish_beta_release:
     needs: [confirm_publish, run_build_and_test, create_branch]
