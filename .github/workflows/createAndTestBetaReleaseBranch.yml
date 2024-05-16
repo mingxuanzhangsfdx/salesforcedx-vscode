@@ -34,7 +34,6 @@ jobs:
       - name: Update references for Publishing
         run: |
           node bundle-publish-scripts/scripts/update-references-in-vsce.js
-          npm install -g esbuild-plugin-pino@^2.1.0
           node bundle-publish-scripts/scripts/update-bundle-configs-in-vsce.js
       - name: Set NPM at the correct version for Lerna
         run: npm install -g npm@9.8.1
