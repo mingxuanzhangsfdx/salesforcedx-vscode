@@ -45,7 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ inputs.branch }}
+          ref: ${{ inputs.branch || github.event.ref }}
       - id: getVersion
         run: echo "::set-output name=version::"$(node -pe "require('./packages/salesforcedx-vscode/package.json').version")""
       - run: echo "Release Version is ${{ steps.getVersion.outputs.version }}"
@@ -64,7 +64,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ inputs.branch }}
+          ref: ${{ inputs.branch || github.event.ref }}
       - uses: actions/download-artifact@v3
         id: download
         with:
