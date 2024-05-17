@@ -3,6 +3,12 @@ name: Publish Beta Release to Github Only
 on:
   workflow_dispatch:
 
+  workflow_call:
+    inputs:
+      branch:
+        type: string
+        required: true
+
 jobs:
   save_artifacts:
     name: 'Build VSIX Files'
@@ -11,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.ref }}
+          ref: ${{ inputs.branch || github.event.ref }}
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
@@ -38,6 +44,8 @@ jobs:
       RELEASE_VERSION: ${{ steps.getVersion.outputs.version }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.branch }}
       - id: getVersion
         run: echo "::set-output name=version::"$(node -pe "require('./packages/salesforcedx-vscode/package.json').version")""
       - run: echo "Release Version is ${{ steps.getVersion.outputs.version }}"
@@ -48,17 +56,19 @@ jobs:
     needs: [save_artifacts, get_release_variables]
     outputs:
       version: ${{ steps.version.outputs.version }}
-      release_type: ${{ github.event.inputs.releaseType || 'minor' }}
+      release_type: ${{ 'beta' }}
       result: ${{ steps.result.outputs.result }}
     env:
       VERSION: ${{ needs.get_release_variables.outputs.RELEASE_VERSION }}
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.branch }}
       - uses: actions/download-artifact@v3
         id: download
         with:
-          name: VS Code Extensions
+          name: ${{ needs.get_release_variables.outputs.RELEASE_VERSION }}
           path: tmp/saved-extensions
       - uses: ./.github/actions/gitConfig
         with:
@@ -71,7 +81,7 @@ jobs:
         run: ls -R
         working-directory: tmp/saved-extensions
       - name: 'Create Pre-Release and Attach VSIX Files'
-        run: gh release create v${{ env.VERSION }} **.vsix --title "Pre-Release v${{ env.VERSION }}" --notes-file CHANGELOG.md --prerelease
+        run: gh release create v${{ env.VERSION }} **.vsix --title "Pre-Release v${{ env.VERSION }}" --notes-file ./packages/salesforcedx-vscode/CHANGELOG.md --prerelease
         working-directory: tmp/saved-extensions
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
