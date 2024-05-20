@@ -23,6 +23,8 @@ jobs:
         run: |
           mkdir ./tmp-dir
           gh run download ${{ inputs.runId }} -D ./tmp-dir
+        env:
+          GITHUB_TOKEN: ${{ secrets.IDEE_GH_TOKEN }}
       - id: getVersion
         run: echo "::set-output name=version::"basename "$(find ./tmp-dir -mindepth 1 -maxdepth 1 -type d)"""
   
