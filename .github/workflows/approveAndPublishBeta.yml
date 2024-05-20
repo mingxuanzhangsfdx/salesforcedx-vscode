@@ -25,6 +25,6 @@ jobs:
     uses: ./.github/workflows/publishBeta.yml
     secrets: inherit
     with: 
-      runId: ${{ inputs.runId }}
+      runId: ${{ inputs.runId || github.event.workflow_run.id }}
   
   

@@ -26,8 +26,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.IDEE_GH_TOKEN }}
       - id: getVersion
-        run: echo "::set-output name=version::"basename "$(find ./tmp-dir -mindepth 1 -maxdepth 1 -type d)"""
-  
+        run: |
+          version=$(basename "$(find ./tmp-dir -mindepth 1 -maxdepth 1 -type d)")
+          echo "::set-output name=version::$version"
   create_git_tag:
     name: 'Create and Tag Beta Release'
     runs-on: ubuntu-latest
