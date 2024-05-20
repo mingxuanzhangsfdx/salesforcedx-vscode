@@ -10,7 +10,7 @@ on:
 
 jobs:
   download_artifacts:
-    name: 'Download VSIX Files'
+    name: 'Checkout Version'
     runs-on: ubuntu-latest
     outputs:
       RELEASE_VERSION: ${{ steps.getVersion.outputs.version }}
@@ -44,6 +44,12 @@ jobs:
       - uses: actions/checkout@v3	
         with:	
           ref:  release/v${{ env.VERSION }}
+      - name: Download extension vsixes
+        run: |
+          mkdir ./tmp-dir
+          gh run download ${{ inputs.runId }} -D ./tmp-dir
+        env:
+          GITHUB_TOKEN: ${{ secrets.IDEE_GH_TOKEN }}
       - run: cp ./packages/salesforcedx-vscode/CHANGELOG.md ${{ env.EXTENSION_PATH }}
       - uses: ./.github/actions/gitConfig
         with:
